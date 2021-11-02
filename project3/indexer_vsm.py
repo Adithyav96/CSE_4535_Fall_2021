@@ -154,7 +154,7 @@ class Indexer:
                         }]
                     },
                     'similarity': {
-                        'class': 'solr.ClassicSimilarity'
+                        'class': 'solr.ClassicSimilarityFactory'
                     },
                     'queryAnalyzer': {
                         'tokenizer': {
@@ -201,7 +201,7 @@ class Indexer:
                         }]
                     },
                     'similarity': {
-                        'class': 'solr.ClassicSimilarity'
+                        'class': 'solr.ClassicSimilarityFactory'
                     },
                 }, {
                     'name': 'text_de',
@@ -225,7 +225,7 @@ class Indexer:
                         }]
                     },
                     'similarity': {
-                        'class': 'solr.ClassicSimilarity'
+                        'class': 'solr.ClassicSimilarityFactory'
                     },
                 }
             ]

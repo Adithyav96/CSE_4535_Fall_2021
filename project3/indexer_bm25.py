@@ -244,7 +244,7 @@ if __name__ == "__main__":
     i = Indexer()
     i.do_initial_setup()
     data = read_data()
-    i.replace_bm25()
+    i.replace_bm25(b=0.8,k1=1.4)
     
     i.add_fields()
     i.create_documents(data)
