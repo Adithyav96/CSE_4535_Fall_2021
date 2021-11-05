@@ -9,8 +9,8 @@ from urllib.parse import quote
 
 # change the url according to your own corename and query
 #inurl = 'http://localhost:8983/solr/corename/select?q=*%3A*&fl=id%2Cscore&wt=json&indent=true&rows=20'
-core = 'VSM_1'
-ip = '18.219.42.216'
+core = 'VSM_2'
+ip = '3.137.137.240'
 file1 = open('queries.txt', 'r',encoding='utf-8')
 Lines = file1.readlines()
 file1.close()
@@ -29,7 +29,8 @@ for line in inputlines:
     count = count + 1
     encoded_input = quote(line)
     print(line)
-    inurl = f'http://{ip}:8983/solr/{core}/select?q=text_en:{encoded_input}%20OR%20text_de:{encoded_input}%20OR%20text_ru:{encoded_input}&fl=id%2Cscore&wt=json&indent=true&rows=20'
+    #inurl = f'http://{ip}:8983/solr/{core}/select?q=text_en:{encoded_input}%20OR%20text_de:{encoded_input}%20OR%20text_ru:{encoded_input}&fl=id%2Cscore&wt=json&indent=true&rows=20'
+    inurl = f'http://{ip}:8983/solr/{core}/select?q={encoded_input}&q.op=OR&defType=dismax&qf=text_en%20text_ru%20text_de&fl=id%2Cscore&wt=json&indent=true&rows=20'
     print(inurl)
     outfn = 'q2.txt'
     if count > 9:

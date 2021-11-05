@@ -8,14 +8,14 @@ from urllib.parse import quote
 # declare parameters
 AWS_IP = '3.137.137.240'
 IRModel = ['BM25', 'VSM'] #either bm25 or vsm
-f = open('test-queries.txt','r')
+f = open('test-queries.txt','r',encoding='utf-8')
 documents = f.readlines()
 
 for Model in IRModel:
     if Model == 'bm25':
-        core = "BM25_1"
+        core = "BM25_2"
     else:
-        core = "VSM_1"
+        core = "VSM_2"
     print(core)
 
     for index, document in enumerate(documents):
