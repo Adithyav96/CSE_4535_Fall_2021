@@ -113,19 +113,6 @@ class Indexer:
 
         print(requests.post(self.solr_url + CORE_NAME + "/schema", json=data).json())
     
-    # def replace_fields(self):
-    #     data = {
-    #         "replace-field": [
-    #             {
-    #                 "name": "age",
-    #                 "type": "string",
-    #                 "multiValued": False
-    #             }
-    #         ]
-    #     }
-
-    #     print(requests.post(self.solr_url + CORE_NAME + "/schema", json=data).json())
-    
 
     def replace_bm25(self, b=None, k1=None):
         data = {
@@ -201,9 +188,9 @@ class Indexer:
                             'words': 'lang/stopwords_ru.txt',
                             'ignoreCase': 'true'
                         }, {
-                            #'class': 'solr.SnowballPorterFilterFactory',
-                            #'language': 'Russian'
-                            'class':'RussianLightStemFilterFactory'
+                            'class': 'solr.SnowballPorterFilterFactory',
+                            'language': 'Russian'
+                            #'class':'solr.RussianLightStemFilterFactory'
                         }]
                     },
                     'similarity': {
@@ -223,9 +210,9 @@ class Indexer:
                             'words': 'lang/stopwords_ru.txt',
                             'ignoreCase': 'true'
                         }, {
-                            #'class': 'solr.SnowballPorterFilterFactory',
-                            #'language': 'Russian'
-                            'class':'RussianLightStemFilterFactory'
+                            'class': 'solr.SnowballPorterFilterFactory',
+                            'language': 'Russian'
+                            #'class':'solr.RussianLightStemFilterFactory'
                         }]
                     },
                 }, {

@@ -7,7 +7,7 @@ from urllib.parse import quote
 
 # declare parameters
 ip = '3.137.137.240'
-IRModel = ['BM25', 'VSM'] #either bm25 or vsm
+IRModel = ['bm25', 'vsm'] #either bm25 or vsm
 f = open('test-queries.txt','r',encoding='utf-8')
 documents = f.readlines()
 
@@ -16,7 +16,6 @@ for Model in IRModel:
         core = "BM25_2"
     else:
         core = "VSM_2"
-    print(core)
 
     for index, document in enumerate(documents):
         qid = document[ 0 : 4 ]
@@ -25,9 +24,11 @@ for Model in IRModel:
         inputText = quote(text)
         inurl = f'http://{ip}:8983/solr/{core}/select?q={inputText}&q.op=OR&defType=dismax&qf=text_en%20text_ru%20text_de&fl=id%2Cscore&wt=json&indent=true&rows=20'
 
-        outfn = f'{Model}/{index+1}.txt'
-
-        print('MY OUTPUT FILE PATH>> ',outfn)       
+        if Model == 'bm25':
+            outfn = f'BM25/{index+1}.txt'    
+        else:
+            outfn = f'VSM/{index+1}.txt'
+        
         outf = open(outfn, 'a+')
 
         data = urllib.request.urlopen(inurl)

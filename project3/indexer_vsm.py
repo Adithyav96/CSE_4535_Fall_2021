@@ -113,19 +113,6 @@ class Indexer:
 
         print(requests.post(self.solr_url + CORE_NAME + "/schema", json=data).json())
     
-    # def replace_fields(self):
-    #     data = {
-    #         "replace-field": [
-    #             {
-    #                 "name": "age",
-    #                 "type": "string",
-    #                 "multiValued": False
-    #             }
-    #         ]
-    #     }
-
-    #     print(requests.post(self.solr_url + CORE_NAME + "/schema", json=data).json())
-    
 
     def replace_VSM(self, b=None, k1=None):
         data = {
