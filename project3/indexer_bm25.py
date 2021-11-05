@@ -3,7 +3,7 @@ import pysolr
 import requests
 import json
 
-CORE_NAME = "BM25_1"
+CORE_NAME = "BM25_2"
 AWS_IP = "localhost"
 
 
@@ -186,7 +186,7 @@ class Indexer:
                     'name': 'text_ru',
                     'class': 'solr.TextField',
                     'positionIncrementGap': '100',
-                    'analyzer': {
+                    'indexAnalyzer': {
                         'tokenizer': {
                             'class': 'solr.StandardTokenizerFactory'
                         },
@@ -207,11 +207,27 @@ class Indexer:
                         'b': str(b),
                         'k1': str(k1)
                     },
+                    'queryAnalyzer': {
+                        'tokenizer': {
+                            'class': 'solr.StandardTokenizerFactory'
+                        },
+                        'filters': [{
+                            'class': 'solr.LowerCaseFilterFactory'
+                        }, {
+                            'class': 'solr.StopFilterFactory',
+                            'format': 'snowball',
+                            'words': 'lang/stopwords_ru.txt',
+                            'ignoreCase': 'true'
+                        }, {
+                            'class': 'solr.SnowballPorterFilterFactory',
+                            'language': 'Russian'
+                        }]
+                    },
                 }, {
                     'name': 'text_de',
                     'class': 'solr.TextField',
                     'positionIncrementGap': '100',
-                    'analyzer': {
+                    'indexAnalyzer': {
                         'tokenizer': {
                             'class': 'solr.StandardTokenizerFactory'
                         },
@@ -233,6 +249,23 @@ class Indexer:
                         'b': str(b),
                         'k1': str(k1)
                     },
+                    'queryAnalyzer': {
+                        'tokenizer': {
+                            'class': 'solr.StandardTokenizerFactory'
+                        },
+                        'filters': [{
+                            'class': 'solr.LowerCaseFilterFactory'
+                        }, {
+                            'class': 'solr.StopFilterFactory',
+                            'format': 'snowball',
+                            'words': 'lang/stopwords_de.txt',
+                            'ignoreCase': 'true'
+                        }, {
+                            'class': 'solr.GermanNormalizationFilterFactory'
+                        }, {
+                            'class': 'solr.GermanLightStemFilterFactory'
+                        }]
+                    }
                 }
             ]
         }

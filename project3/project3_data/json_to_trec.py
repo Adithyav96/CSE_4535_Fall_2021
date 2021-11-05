@@ -1,42 +1,41 @@
-# -*- coding: utf-8 -*-
-
-
 import json
 # if you are using python 3, you should 
-import urllib.request 
+import urllib.request
 from urllib.parse import quote
-#import urllib2
 
+# import urllib2
 
-# change the url according to your own corename and query
-#inurl = 'http://localhost:8983/solr/corename/select?q=*%3A*&fl=id%2Cscore&wt=json&indent=true&rows=20'
-core1 = ['VSM_1','BM25_1']
-input1 = ['Anti-Refugee Rally in Dresden','Syrian civil war','Assad und ISIS auf dem Vormarsch','Russische Botschaft in Syrien von Granaten getroffen','Бильд. Внутренний документ говорит, что Германия примет 1,5 млн беженцев в этом году']
-ip = '18.219.42.216'
+# declare parameters
+AWS_IP = '3.137.137.240'
+IRModel = ['BM25', 'VSM'] #either bm25 or vsm
+f = open('test-queries.txt','r')
+documents = f.readlines()
 
-for core in core1:
-    encoded_input = quote(input)
-    print(encoded_input)
+for Model in IRModel:
+    if Model == 'bm25':
+        core = "BM25_1"
+    else:
+        core = "VSM_1"
+    print(core)
 
-    inurl = f'http://{ip}:8983/solr/{core}/select?q=text_en:{encoded_input}%20OR%20text_de:{encoded_input}%20OR%20text_ru:{encoded_input}&fl=id%2Cscore&wt=json&indent=true&rows=20'
-    outfn = 'q3.txt'
-input = 'Anti-Refugee Rally in Dresden'
-encoded_input = quote(input)
-print(inurl)
+    for index, document in enumerate(documents):
+        qid = document[ 0 : 4 ]
+        text = document[ 4 : -1 ]
 
+        inputText = quote(text)
+        inurl = f'http://{AWS_IP}:8983/solr/{core}/select?q=text_en:{inputText}%20OR%20text_de:{inputText}%20OR%20text_ru:{inputText}&fl=id%2Cscore&wt=json&indent=true&rows=20'
 
-# change query id and IRModel name accordingly
-qid = '001'
-IRModel='vsm' #either bm25 or vsm
-outf = open(outfn, 'a+')
-#data = urllib2.urlopen(inurl)
-# if you're using python 3, you should use
-data = urllib.request.urlopen(inurl)
+        outfn = f'{Model}/{index+1}.txt'
 
-docs = json.load(data)['response']['docs']
-# the ranking should start from 1 and increase
-rank = 1
-for doc in docs:
-    outf.write(qid + ' ' + 'Q0' + ' ' + str(doc['id']) + ' ' + str(rank) + ' ' + str(doc['score']) + ' ' + IRModel + '\n')
-    rank += 1
-outf.close()
+        print('MY OUTPUT FILE PATH>> ',outfn)       
+        outf = open(outfn, 'a+')
+
+        data = urllib.request.urlopen(inurl)
+
+        docs = json.load(data)['response']['docs']
+        # the ranking should start from 1 and increase
+        rank = 1
+        for doc in docs:
+            outf.write(qid + ' ' + 'Q0' + ' ' + str(doc['id']) + ' ' + str(rank) + ' ' + str(doc['score']) + ' ' + Model + '\n')
+            rank += 1
+        outf.close()

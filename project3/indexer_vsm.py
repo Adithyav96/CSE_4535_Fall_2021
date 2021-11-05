@@ -3,7 +3,7 @@ import pysolr
 import requests
 import json
 
-CORE_NAME = "VSM_1"
+CORE_NAME = "VSM_2"
 AWS_IP = "localhost"
 
 
