@@ -151,9 +151,9 @@ class Indexer:
                             'protected': 'protwords.txt'
                         }, {
                             'class': 'solr.PorterStemFilterFactory'
-                        },
-                        {'class' : "solr.ReversedWildcardFilterFactory",
-                         'withOriginal':'true'}
+                        }
+                        #{'class' : "solr.ReversedWildcardFilterFactory",
+                        # 'withOriginal':'true'}
                         ]
                     },
                     'similarity': {
@@ -201,8 +201,9 @@ class Indexer:
                             'words': 'lang/stopwords_ru.txt',
                             'ignoreCase': 'true'
                         }, {
-                            'class': 'solr.SnowballPorterFilterFactory',
-                            'language': 'Russian'
+                            #'class': 'solr.SnowballPorterFilterFactory',
+                            #'language': 'Russian'
+                            'class':'RussianLightStemFilterFactory'
                         }]
                     },
                     'similarity': {
@@ -222,8 +223,9 @@ class Indexer:
                             'words': 'lang/stopwords_ru.txt',
                             'ignoreCase': 'true'
                         }, {
-                            'class': 'solr.SnowballPorterFilterFactory',
-                            'language': 'Russian'
+                            #'class': 'solr.SnowballPorterFilterFactory',
+                            #'language': 'Russian'
+                            'class':'RussianLightStemFilterFactory'
                         }]
                     },
                 }, {

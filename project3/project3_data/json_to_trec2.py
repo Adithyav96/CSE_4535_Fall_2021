@@ -9,7 +9,7 @@ from urllib.parse import quote
 
 # change the url according to your own corename and query
 #inurl = 'http://localhost:8983/solr/corename/select?q=*%3A*&fl=id%2Cscore&wt=json&indent=true&rows=20'
-core = 'VSM_2'
+core = 'BM25_2'
 ip = '3.137.137.240'
 file1 = open('queries.txt', 'r',encoding='utf-8')
 Lines = file1.readlines()
@@ -30,15 +30,15 @@ for line in inputlines:
     encoded_input = quote(line)
     print(line)
     #inurl = f'http://{ip}:8983/solr/{core}/select?q=text_en:{encoded_input}%20OR%20text_de:{encoded_input}%20OR%20text_ru:{encoded_input}&fl=id%2Cscore&wt=json&indent=true&rows=20'
-    inurl = f'http://{ip}:8983/solr/{core}/select?q={encoded_input}&q.op=OR&defType=dismax&qf=text_en%20text_ru%20text_de&fl=id%2Cscore&wt=json&indent=true&rows=20'
+    inurl = f'http://{ip}:8983/solr/{core}/select?q={encoded_input}&q.op=OR&defType=edismax&qf=text_en%20text_ru%20text_de&fl=id%2Cscore&wt=json&indent=true&rows=20'
     print(inurl)
-    outfn = 'q2.txt'
+    outfn = 'q1.txt'
     if count > 9:
         qid = '0' + str(count)
     else:
         qid = '00' + str(count)
 
-    IRModel='vsm' #either bm25 or vsm
+    IRModel='bm25' #either bm25 or vsm
     outf = open(outfn, 'a+')
     data = urllib.request.urlopen(inurl)
 
