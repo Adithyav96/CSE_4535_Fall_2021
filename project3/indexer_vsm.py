@@ -151,7 +151,9 @@ class Indexer:
                             'protected': 'protwords.txt'
                         }, {
                             'class': 'solr.PorterStemFilterFactory'
-                        }]
+                        },
+                        {'class' : "solr.ReversedWildcardFilterFactory",
+                         'withOriginal':'true'}]
                     },
                     'similarity': {
                         'class': 'solr.ClassicSimilarityFactory'
